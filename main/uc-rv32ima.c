@@ -172,7 +172,8 @@ static uint32_t HandleControlStore(uint32_t addy, uint32_t val)
 {
 	//UART 8250 / 16550 Data Buffer
 	if (addy == 0x10000000) {
-		printf("%c", val);
+		// printf("%c", val);
+		printf("%c", (int)val);
 		fflush(stdout);
 	}
 	return 0;

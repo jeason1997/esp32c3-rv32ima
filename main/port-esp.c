@@ -192,7 +192,8 @@ int load_images(int ram_size, int *kern_len)
 
 	flen = kernel_end - kernel_start;
 	if (flen > ram_size) {
-		printf("Error: Could not fit RAM image (%ld bytes) into %"PRIu32"\n", flen, ram_size);
+		// printf("Error: Could not fit RAM image (%ld bytes) into %"PRIu32"\n", flen, ram_size);
+		printf("Error: Could not fit RAM image (%ld bytes) into %d\n", flen, ram_size);
 		return -1;
 	}
 	if (kern_len)
@@ -203,14 +204,16 @@ int load_images(int ram_size, int *kern_len)
 	printf("loading kernel Image (%ld bytes) from flash:%lx into psram:%lx\n", flen, flashaddr, addr);
 	while (flen >= 64) {
 		esp_flash_read(NULL, dmabuf, flashaddr, 64);
-		psram_write(handle, addr, dmabuf, 64);
+		// psram_write(handle, addr, dmabuf, 64);
+		psram_write(addr, dmabuf, 64);
 		addr += 64;
 		flashaddr += 64;
 		flen -= 64;
 	}
 	if (flen) {
 		esp_flash_read(NULL, dmabuf, flashaddr, flen);
-		psram_write(handle, addr, dmabuf, flen);
+		// psram_write(handle, addr, dmabuf, flen);
+		psram_write(addr, dmabuf, flen);
 	}
 
 	return 0;
